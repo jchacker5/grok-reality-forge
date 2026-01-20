@@ -26,7 +26,12 @@ struct WorldDetailView: View {
 
                 HStack(spacing: 12) {
                     Button("Enter Immersive") {
-                        Task { await openImmersiveSpace(id: "ImmersiveWorld") }
+                        Task {
+                            let result = await openImmersiveSpace(id: "ImmersiveWorld")
+                            if case .error = result {
+                                appModel.error = .apiError(message: "Unable to open immersive space.")
+                            }
+                        }
                     }
                     .buttonStyle(.borderedProminent)
 
